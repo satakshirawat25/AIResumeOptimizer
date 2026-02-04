@@ -2,6 +2,7 @@
 import React from 'react'
 import styles from './History.module.css'
 import Skeleton from '@mui/material/Skeleton'
+import withAuthHOC from '../../utils/HOC/withAuthHOC'
 
 const History = () => {
   return (
@@ -17,7 +18,7 @@ const History = () => {
           sx={{borderRadius:"20px"}}
           />
 
-          
+
           <div className={styles.cardPercentage}>88%</div>
           <h2>Frontend Developer</h2>
           <p>Resume Name:Resume.pdf</p>
@@ -63,4 +64,4 @@ const History = () => {
   )
 }
 
-export default History
+export default withAuthHOC(History)
