@@ -22,4 +22,6 @@ export const ResumeSchema = new mongoose.Schema({
     }
 },{timestamps:true})
 
-export const resume = mongoose.model("resume",ResumeSchema)
+ const resumeModel = mongoose.model("resume",ResumeSchema)
+
+ export default resumeModel
