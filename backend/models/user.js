@@ -1,23 +1,48 @@
-import mongoose from "mongoose";
+// import mongoose from "mongoose";
 
-export const userSchema = new mongoose.Schema({
-    name:{
-        type:String,
-        required:true
+// export const userSchema = new mongoose.Schema({
+//     name:{
+//         type:String,
+//         required:true
+//     },
+//     email:{
+//         type:String,
+//         required:true
+//     },
+//     role:{
+//         type:String,
+//         default:'user'
+//     },
+//     photoUrl:{
+//         type:String,  required:true
+//     },
+// },{timestamps:true})
+
+//  const UserModel = mongoose.model("user",userSchema)
+
+//  export default UserModel
+
+
+const mongoose = require('mongoose');
+
+const UserSchema = new mongoose.Schema({
+    email: {
+        type: String,
+        required: true
     },
-    email:{
-        type:String,
-        required:true
+    name:{
+        type: String,
+        required: true
     },
     role:{
-        type:String,
-        default:'user'
+        type: String,
+        default:"user"
     },
     photoUrl:{
-        type:String,  required:true
+        type: String,
     },
-},{timestamps:true})
+},{timestamps:true});
 
- const UserModel = mongoose.model("user",userSchema)
+const userModel = mongoose.model("user",UserSchema);
 
- export default UserModel
+module.exports = userModel

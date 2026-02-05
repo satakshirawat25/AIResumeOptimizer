@@ -1,22 +1,24 @@
-import express from 'express'
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const { connectDB } = require("./config/db.js");
+const app = express();
+// const PORT = 4000;
 
-import { connectDB } from './config/db.js'
-import UserRoutes from './Routes/userRoutes.js'
-const app = express()
-import dotenv from "dotenv";
-dotenv.config();
 
-
-app.use(express.json());
+app.use(express.json()); // 👈 THIS IS REQUIRED
 app.use(express.urlencoded({ extended: true }));
 
+
 //routes
-app.use('/api/user',UserRoutes)
+const UserRoutes = require("./Routes/userRoutes");
+const ResumeRoutes = require("./Routes/resumeRoutes");
 
-connectDB()
+app.use("/api/user", UserRoutes);
+app.use("/api/resume", ResumeRoutes);
+connectDB();
 
-
-const PORT=8000
-app.listen(PORT,()=>{
-    console.log("serer running")
-})
+const PORT = 8000;
+app.listen(PORT, () => {
+  console.log("server running");
+});
