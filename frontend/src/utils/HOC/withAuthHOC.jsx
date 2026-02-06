@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import {AuthContext} from '../AuthContext.jsx'
 
 
-const withAuthHOC = (wrappedComponents) => {
+const withAuthHOC = (WrappedComponents) => {
     
   return (props)=> {
     const navigate = useNavigate()
@@ -20,7 +20,7 @@ const withAuthHOC = (wrappedComponents) => {
         }
     },[navigate])
 
-    return <wrappedComponents {...props}/>
+    return <WrappedComponents {...props}/>
 }
 }
 

@@ -1,10 +1,38 @@
-import React from "react";
+import React,{useState} from "react";
 import styles from "./Dashboard.module.css";
 import CreditScoreIcon from "@mui/icons-material/CreditScore";
 import Skeleton from "@mui/material/Skeleton";
 import withAuthHOC from "../../utils/HOC/withAuthHOC";
+import axios from '../../utils/axios'
+import {useContext} from "react";
+import {AuthContext} from '../../utils/AuthContext'
 
 const Dashboard = () => {
+  const [uploadFiletext,setUploadFileText] = useState("upload your resume")
+  const [loading,setLoading] = useState(false)
+  const [resumeFile,setResumeFile] = useState(null)
+  const [jobDesc,setJobDesc] = useState("")
+  const [result,setResult] = useState(null)
+
+  const {userInfo} = useContext(AuthContext)
+
+  const handleOnChangeFile =(e)=>{
+    console.log(e.target.files[0])
+    setUploadFileText(e.target.files[0].name)
+  }
+ 
+  const handleUpload = async()=>{
+    setResult(null)
+    if(!jobDesc || !resumeFile){
+      alert("Please fill Job Description & upload Resume")
+      return
+    }
+
+    const formData = new.FormData()
+    formData.append("resume",resumeFile)
+    formData.append("job_desc",jobDesc)
+    formData.append("user",userInfo._id)
+  }
   return (
     <div className={styles.Dashboard}>
       <div className={styles.DashboardLeft}>
@@ -33,14 +61,14 @@ const Dashboard = () => {
 
           <div className={styles.DashboardInputField}>
             <label htmlFor="inputField" className={styles.analyzeAIBtn}>
-              Upload Resume
-            </label>
-            <input type="file" accept=".pdf" id="inputField" />
+           
+              {uploadFiletext}</label>
+            <input type="file" accept=".pdf" id="inputField" onChange={handleOnChangeFile}/>
           </div>
         </div>
 
         <div className={styles.jobDesc}>
-          <textarea
+          <textarea value={jobDesc} onChnage={(e)=>{setJobDesc(e.target.value)}}
             className={styles.textArea}
             placeholder="Paste your Job Description"
             rows={10}

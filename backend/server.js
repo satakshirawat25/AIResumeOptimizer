@@ -8,6 +8,10 @@ const app = express();
 
 app.use(express.json()); // 👈 THIS IS REQUIRED
 app.use(express.urlencoded({ extended: true }));
+app.use(cors({
+  credentials:true,
+  origin :"http://localhost:5173"
+}))
 
 
 //routes
@@ -22,3 +26,7 @@ const PORT = 8000;
 app.listen(PORT, () => {
   console.log("server running");
 });
+
+
+
+ 
