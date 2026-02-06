@@ -4,6 +4,8 @@ import Skeleton from '@mui/material/Skeleton'
 import withAuthHOC from '../../utils/HOC/withAuthHOC'
 
 const Admin = () => {
+    const [data, setData] = useState([])
+    const [loader, setLoader] = useState(false)
   return (
     <div className={styles.Admin}>
       <div className={styles.AdminBlock}>

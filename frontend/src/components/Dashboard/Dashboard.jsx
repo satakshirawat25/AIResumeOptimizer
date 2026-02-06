@@ -96,11 +96,9 @@ const Dashboard = () => {
 
           <img
             className={styles.profileImg}
-            src={
-              "https://photosly.in/wp-content/uploads/2024/04/cute-dp-for-girls_3.jpg"
-            }
+            src={userInfo?.photoUrl}
           />
-          <h2>ProfilePicture</h2>
+          <h2>{userInfo?.name}</h2>
         </div>
 
         {

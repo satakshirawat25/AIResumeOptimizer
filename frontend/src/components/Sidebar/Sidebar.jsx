@@ -1,15 +1,30 @@
-import React from 'react'
+import React, { use, useContext } from 'react'
 import styles from './Sidebar.module.css'
 import ArticleIcon from '@mui/icons-material/Article'
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import LogoutIcon from '@mui/icons-material/Logout';
-import {Link,useLocation} from 'react-router-dom'
+import {Link,useLocation, useNavigate} from 'react-router-dom'
 import DashboardIcon from '@mui/icons-material/Dashboard'
+import { AuthContext } from '../../utils/AuthContext';
 
 
 const Sidebar = () => {
+
+    
     const location=useLocation()
+    const navigate=useNavigate()
+
+    const {isLogin,setLogin,userInfo,setUserInfo} = useContext(AuthContext)
+  
+
+
+    const handleLogout = ()=>{
+      localStorage.clear()
+      setLogin(false)
+      setUserInfo(null)
+      navigate('/')
+    }
   return (
     <div className={styles.sideBar}>
         <div className={styles.sideBarIcon}>
@@ -30,12 +45,14 @@ const Sidebar = () => {
                 <div>History</div>
             </Link>
 
-              <Link to={'/admin'} className={[styles.sideBarOption, location.pathname === '/admin' ? styles.selectedOption : null].join(' ')}>
+             {
+              userInfo ?.role=='admin' &&  <Link to={'/admin'} className={[styles.sideBarOption, location.pathname === '/admin' ? styles.selectedOption : null].join(' ')}>
                 <AdminPanelSettingsIcon sx={{fontSize:22}}/>
                 <div>Admin</div>
             </Link>
+             }
 
-              <div className={styles.sideBarOption}>
+              <div onClick={handleLogout} className={styles.sideBarOption}>
                 <LogoutIcon sx={{fontSize:22}}/>
                 <div>Logout</div>
             </div>
