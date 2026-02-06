@@ -1,56 +1,69 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './Admin.module.css'
 import Skeleton from '@mui/material/Skeleton'
 import withAuthHOC from '../../utils/HOC/withAuthHOC'
+import axios from '../../utils/axios'
+
 
 const Admin = () => {
     const [data, setData] = useState([])
     const [loader, setLoader] = useState(false)
+
+    useEffect(()=>{
+      const fetchAllData = async()=>{
+        setLoader(true)
+        try{
+          const results = await axios.get('/api/resume/get')
+          console.log(results.data.resumes)
+          setData(results.data.resumes)
+        }catch(error){
+          console.log(error)
+          alert("Something went wrong")
+        }finally{
+          setLoader(false)
+        }
+      }
+      fetchAllData()
+    },[])
   return (
     <div className={styles.Admin}>
       <div className={styles.AdminBlock}>
 
-        <Skeleton
+        {
+          loader && <>
+          <Skeleton
           variant='rectangular'
           width={266}
           height={200}
           sx={{borderRadius:"20px"}}
           />
 
-        <div className={styles.AdminCard}>
-          <h2>AdminPage</h2>
-          <p style={{color:"blue"}}>adm@gmail.com</p>
-          <h3>Score:50%</h3>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum in voluptas ad dolores doloremque. Voluptatum eos asperiores quo, praesentium temporibus dolore laudantium,Lorem ipsum dolor, sit amet consectetur adipisicing elit. Deserunt eaque repudiandae fugiat quos sed distinctio incidunt consequatur placeat, dignissimos accusamus totam aliquam vero alias dolorem, eveniet quia dolore odit voluptatum. maxime omnis voluptates, doloremque velit labore ullam amet!</p>
-        </div>
+          <Skeleton
+          variant='rectangular'
+          width={266}
+          height={200}
+          sx={{borderRadius:"20px"}}
+          />
 
-        <div className={styles.AdminCard}>
-          <h2>AdminPage</h2>
-          <p style={{color:"blue"}}>adm@gmail.com</p>
-          <h3>Score:50%</h3>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum in voluptas ad dolores doloremque. Voluptatum eos asperiores quo, praesentium temporibus dolore laudantium, maxime omnis voluptates, doloremque velit labore ullam amet!</p>
-        </div>
+          <Skeleton
+          variant='rectangular'
+          width={266}
+          height={200}
+          sx={{borderRadius:"20px"}}
+          />
+          </>
+        }
 
-        <div className={styles.AdminCard}>
-          <h2>AdminPage</h2>
-          <p style={{color:"blue"}}>adm@gmail.com</p>
-          <h3>Score:50%</h3>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum in voluptas ad dolores doloremque. Voluptatum eos asperiores quo, praesentium temporibus dolore laudantium, maxime omnis voluptates, doloremque velit labore ullam amet!</p>
-        </div>
-
-        <div className={styles.AdminCard}>
-          <h2>AdminPage</h2>
-          <p style={{color:"blue"}}>adm@gmail.com</p>
-          <h3>Score:50%</h3>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum </p>
-        </div>
-
-        <div className={styles.AdminCard}>
-          <h2>AdminPage</h2>
-          <p style={{color:"blue"}}>adm@gmail.com</p>
-          <h3>Score:50%</h3>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum in voluptas ad dolores doloremque. Voluptatum eos asperiores quo, praesentium temporibus dolore laudantium, maxime omnis voluptates, doloremque velit labore ullam amet!</p>
-        </div>
+       {
+  data.map((item) => (
+    <div className={styles.AdminCard} key={item._id}>
+      <h2>{item?.user?.name}</h2>
+      <p style={{ color: "blue" }}>{item?.user?.email}</p>
+      <h3>{item?.score}%</h3>
+      <p>{item?.feedback}</p>
+    </div>
+  ))
+}
 
         
 
