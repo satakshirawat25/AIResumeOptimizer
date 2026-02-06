@@ -107,3 +107,14 @@ You are a resume screening assistant.
     });
   }
 };
+
+exports.getAllResumesForUser = async(req,res)=>{
+  try{
+    const {user} = req.params
+    let resume = await ResumeModel.find({user:user}).sort({createdAt:-1})
+    return res.status(200).json({message:"Your Previous History",resume:resume})
+  }catch(error){
+    console.log(error)
+    return res.status(500).json({error:"Server error",message:err.message})
+  }
+}
