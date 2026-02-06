@@ -1,4 +1,4 @@
-.sideBar{
+/* .sideBar{
     flex: 0.2;
     background-color: #0b0b5a;
     color: white;
@@ -38,4 +38,71 @@
 .selectedOption{
     background-color: rgb(72, 72, 222);
 
+} */
+
+
+
+
+.sideBar {
+    flex: 0.22;                /* 🔥 thodi breadth badha di */
+    min-width: 220px;          /* responsive safety */
+    background: linear-gradient(180deg, #0f172a, #1e1b4b);
+    color: #e5e7eb;
+    height: 100vh;
+    flex-shrink: 0;
+
+    display: flex;
+    flex-direction: column;
+    box-shadow: 4px 0 18px rgba(0, 0, 0, 0.25);
+}
+
+/* Top section */
+.sideBarIcon {
+    padding: 26px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sideBarTopContent {
+    font-size: 22px;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Menu container */
+.sideBarOptionsBlock {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 0 14px;
+}
+
+/* Menu item */
+.sideBarOption {
+    padding: 14px 16px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    font-size: 16px;
+    cursor: pointer;
+    color: #c7d2fe;
+    text-decoration: none;
+    border-radius: 12px;
+    transition: all 0.25s ease;
+}
+
+/* Hover */
+.sideBarOption:hover {
+    background: rgba(99, 102, 241, 0.15);
+    color: #ffffff;
+}
+
+/* Active */
+.selectedOption {
+    background: linear-gradient(90deg, #6366f1, #4f46e5);
+    color: #ffffff;
 }

@@ -3,6 +3,7 @@ import styles from "./Dashboard.module.css";
 import CreditScoreIcon from "@mui/icons-material/CreditScore";
 import Skeleton from "@mui/material/Skeleton";
 import withAuthHOC from "../../utils/HOC/withAuthHOC";
+;
 import axios from '../../utils/axios'
 import {useContext} from "react";
 import {AuthContext} from '../../utils/AuthContext'
@@ -60,10 +61,10 @@ const Dashboard = () => {
           <div> Important Instruction: </div>
           <div className={styles.dashboardInstruction}>
             <div>
-              Please paste the complete job description in the "Job Description"
+              📄 Please paste the complete job description in the "Job Description"
               filed before submitting.
             </div>
-            <div>Only PDF format (.pdf) resumes are accepted</div>
+            <div>⚠️ Only PDF format (.pdf) resumes are accepted</div>
           </div>
         </div>
 
