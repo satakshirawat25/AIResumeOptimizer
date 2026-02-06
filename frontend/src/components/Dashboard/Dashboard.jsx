@@ -17,7 +17,7 @@ const Dashboard = () => {
   const {userInfo} = useContext(AuthContext)
 
   const handleOnChangeFile =(e)=>{
-    console.log(e.target.files[0])
+    setResumeFile(e.target.files[0])
     setUploadFileText(e.target.files[0].name)
   }
  
@@ -28,11 +28,22 @@ const Dashboard = () => {
       return
     }
 
-    const formData = new.FormData()
+    const formData = new FormData()
     formData.append("resume",resumeFile)
     formData.append("job_desc",jobDesc)
     formData.append("user",userInfo._id)
+    setLoading(true)
+
+  try{
+    const result =await axios.post('/api/resume/addResume',formData)
+    setResult(result.data.data)
+
+  }catch(error){
+    console.log(error)
+  }finally{
+    setLoading(false)
   }
+}
   return (
     <div className={styles.Dashboard}>
       <div className={styles.DashboardLeft}>
@@ -57,7 +68,7 @@ const Dashboard = () => {
         </div>
 
         <div className={styles.DashboardUploadResume}>
-          <div className={styles.DashboardResumeBlock}>Upload Your Resume</div>
+          <div className={styles.DashboardResumeBlock}>{uploadFiletext}</div>
 
           <div className={styles.DashboardInputField}>
             <label htmlFor="inputField" className={styles.analyzeAIBtn}>
@@ -68,14 +79,14 @@ const Dashboard = () => {
         </div>
 
         <div className={styles.jobDesc}>
-          <textarea value={jobDesc} onChnage={(e)=>{setJobDesc(e.target.value)}}
+          <textarea value={jobDesc} onChange={(e)=>{setJobDesc(e.target.value)}}
             className={styles.textArea}
             placeholder="Paste your Job Description"
             rows={10}
             cols={50}
           />
 
-          <div className={styles.AnalyzeBtn}>Analyze</div>
+          <div className={styles.AnalyzeBtn} onClick={handleUpload}>Analyze</div>
         </div>
       </div>
 
@@ -92,26 +103,30 @@ const Dashboard = () => {
           <h2>ProfilePicture</h2>
         </div>
 
-        {/* <div className={styles.DashboardRightTopCard}>
+        {
+          result && <div className={styles.DashboardRightTopCard}>
         <div>Result</div>
 
        <div style={{display:"flex",justifyContent:"center",alignItems:"center",gap:20}}>
-      <h1>75%</h1>
+      <h1>{result?.score}%</h1>
       <CreditScoreIcon sx={{fontSize:22}}/>
        </div>
        
        <div className={styles.feedback}>
         <h3>Feedback</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias natus nesciunt earum officiis quam dolorum aliquid, veniam a cupiditate sed vel reprehenderit eum nulla ea necessitatibus. Recusandae tempore adipisci quae!</p>
+        <p>{result?.feedback}</p>
        </div>
-      </div> */}
+      </div>
+        }
 
-        <Skeleton
+        {
+          loading && <Skeleton
           variant="rectangular"
           sx={{ borderRadius: "20px" }}
           width={370}
           height={300}
         />
+        }
       </div>
     </div>
   );
